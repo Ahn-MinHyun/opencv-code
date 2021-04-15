@@ -3,7 +3,7 @@ import cv2
 imageName = "data/images/sample.jpg"
 
 # open cv로 이미지 열기
-image = cv2.imread(imageName, cv2.IMREAD_COLOR)
+image = cv2.imread(imageName, 1)
 
 # 이미지가 정상인지 체크
 if image is None:
