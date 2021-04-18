@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 
 imageName = "data/images/sample.jpg"
 
@@ -18,6 +19,7 @@ print(image.shape)
 
 grayImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) 
  
+# 이미지를 각각의 윈도우에 표시한것
 cv2.imshow("image",image)
 cv2.imshow("grayscale", grayImage)
 
@@ -30,6 +32,12 @@ cv2.imshow("grayscale", grayImage)
 따라서, 위의 imshow 함수를 실행시켜서 우리가 눈으로 
 화인하기 위해서는 다음처럼 코드 작성
 '''
+
+
+# # 하나의 윈도위에 2개의 이미지를 수평으로 붙임 수직 = vstack
+# img_all= np.hstack([image, grayImage])
+# cv2.imshow("combined", img_all)
+
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
