@@ -8,6 +8,9 @@ center = (source.shape[1]/2,source.shape[0]/2)# 회전의 중심좌표
 rotationAngle =90 #회전각도
 scaleFactor = 1 #크기
 
+# 회전각도를 바꾸지 않음녀 화질을 좋게 만들 수도 있다.
+
+
 rotationMatrix = cv2.getRotationMatrix2D(center, rotationAngle, scaleFactor)
 
 print(rotationMatrix) #  6개가 나온다.
