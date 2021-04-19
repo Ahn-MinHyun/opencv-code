@@ -11,7 +11,7 @@ if image is None:
     print('열수 없다.')
 
 print(image)
-
+print("--------------------------") 
 print(image.shape)
 
 # Gray Scale Image : 1개의 행렬로 만들고, 0~255 까지의 숫자로 채워진 

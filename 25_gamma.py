@@ -1,15 +1,15 @@
 import cv2 
 import numpy as np
 
-img = cv2.imread('data/images/candle.jpg')
+img = cv2.imread('data/images/candle.jpg',1)
 
 gamma = 1.5
 
 fullRange = np.arange(0,255+1)
 
-IookupTable = np.unit8(255*np.power(fullRange /255.0),gamma))
+IookupTable = np.uint8(255*np.power((fullRange/255.0),gamma))
 
-output = cv2.LUT(img, lookupTable)
+output = cv2.LUT(img, IookupTable)
 
 combined = np.hstack([img, output])
 
