@@ -17,8 +17,8 @@ image_copy[ image_copy[ : , :] <195 ] = 0
 # cv2.imshow('copy',image_copy)
 
 image = cv2.imread('data2/test_image.jpg')
-print('Height = ', int(image.shape[0]),'pixels')
-print('Width = ', int(image.shape[1]), 'pixels')
+# print('Height = ', int(image.shape[0]),'pixels')
+# print('Width = ', int(image.shape[1]), 'pixels')
 # cv2.imshow('self Driving car',image)
 
 gray_img = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -71,28 +71,71 @@ canny_img = cv2.Canny(gray_img, threshold_1, threshold_2)
 
 # transformation
 image = cv2.imread('data2/test_image2.jpg')
-cv2.imshow('ori',image)
-print(image.shape)
+# cv2.imshow('ori',image)
+# print(image.shape)
 M_rotation = cv2.getRotationMatrix2D( (image.shape[1]/2, image.shape[0]/2 ), 90, 0.5 )
 rotation_img= cv2.warpAffine(image, M_rotation, (image.shape[1], image.shape[0]))
 # cv2.imshow('rotated',rotation_img)
 
 # translation
 image = cv2.imread('data2/test_image3.jpg')
-cv2.imshow('ori', image)
+# cv2.imshow('ori', image)
 height = image.shape[0]
 width = image.shape[1]
 T_matrix = np.array([
     [1, 0, 120],
     [0,1,-150] ],dtype = 'float32')
-print( T_matrix)
+# print( T_matrix)
 translation_image = cv2.warpAffine(image, T_matrix, (width, height))
 # cv2.imshow("tran", translation_image)
 
 # Resizing
 resized_image= cv2.resize(image, None, fx =0.5, fy=0.5, interpolation=cv2.INTER_CUBIC)
-cv2.imshow("resized", resized_image)
+# cv2.imshow("resized", resized_image)
+
+# Region of Interest masking
+# RoI : 관심영역 
+image_color = cv2.imread('data2/test5.jpg')
+image_gray = cv2.cvtColor(image_color, cv2.COLOR_BGR2GRAY)
+cv2.imshow('gray', image_gray)
+print(image_gray.shape) # 크기확인
+# blank = np.zeros( (image_gray.shape[0], image_gray.shape[1])   ) # 파라미터로 몇행 몇열로 만들지 넣어줘야한다.
+blank = np.zeros_like(image_gray) # 사이즈 알아서 넣어준다.
+print(blank.shape)
+RoI = np.array(  [ [ (0,400),
+                    (300,250),
+                    (450,300),
+                    (640,400) ] ] ,dtype='int32' )
+mask = cv2.fillPoly(blank, RoI, 255)
+print("mask",mask)
+cv2.imshow('mask',mask) 
+masked_image = cv2.bitwise_and(image_gray, mask)# 비트와이즈 연산한다.(비트단위로 연산한다) 흑백 1, 0으로만 구성이 되어 있기 때문에
+# cv2.imshow('masked_image',masked_image) 
+
+# hough transform
+src_image= cv2.imread('data2/calendar.jpg')
+image_c = src_image.copy()
+image_g = cv2.cvtColor(image_c, cv2.COLOR_BGR2GRAY)
+image_canny= cv2.Canny(image_g, 50,200, apertureSize=3)
+# cv2.imshow('canny',image_canny)
+lines = cv2.HoughLines(image_canny, 1, np.pi/180, 250)
+
+for i in range(len(lines)):
+    for rho, theta in lines[i]:
+        a = np.cos(theta)
+        b = np.sin(theta)
+        x0 = a*rho
+        y0 = b*rho
+        x1 = int(x0 + 1000*(-b))
+        y1 = int(y0+1000*(a))
+        x2 = int(x0 - 1000*(-b))
+        y2 = int(y0 -1000*(a))
+
+        cv2.line(image_g,(x1,y1),(x2,y2),(255,0,0),2)
+
+res = np.vstack((image_c,src_image))
+cv2.imshow('img',res)
+
 
 cv2.waitKey()
 cv2.destroyAllWindows()
-

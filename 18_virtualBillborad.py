@@ -22,11 +22,11 @@ points_src = points_src.reshape(4,2)
 # 첨가할 이미지에서는 위의 원본 이미지 4개의 점과 매핑할 점을 잡아줘야 한다. 
 cv2.imshow("Image",img_dst)
 points_dst = get_four_points(img_dst)
-
+# print("마우스점",points_dst,points_dst.shape)
 points_dst = points_dst.reshape(4,2)
-
+# print("reshape",points_dst,points_dst.shape)
 h, status = cv2.findHomography(points_src, points_dst) #변환할 수있는  h(행열)을 가져온다.
-
+print("findhomograpy",cv2.findHomography(points_src, points_dst))
 img_temp = cv2.warpPerspective(img_src, h,(dst_size[1],dst_size[0]))
 
 cv2.imshow("img temp", img_temp)

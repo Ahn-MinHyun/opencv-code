@@ -1,7 +1,7 @@
 import cv2 
 import numpy as np
 
-img = cv2.imread('data/images/mountain.jpeg',1)
+img = cv2.imread('data2/test_image.jpg',1)
 
 sharpen = np.array(
     [

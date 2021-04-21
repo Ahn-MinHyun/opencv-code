@@ -8,6 +8,7 @@ maxThreshold = 255*3
 
 random.seed(12345)
 
+
 def callback():
     # 케니 엣지로, 엣지 검출하고,
     imCanny = cv2.Canny(img, threshold, threshold*2, apertureSize=3)
