@@ -4,7 +4,7 @@ import random
 
 threshold = 0
 
-maxThreshold = 255*3
+maxThreshold = 300*2
 
 random.seed(12345)
 
